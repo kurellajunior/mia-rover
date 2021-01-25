@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,5 +41,6 @@ class RoverSimulatorTest {
     assertEquals(new Position(5,6), result.get(0).maxPos);
     assertEquals(new Position(1,2), result.get(0).position());
     assertEquals('N', result.get(0).heading());
+    assertEquals("LMLMLMLMM", result.get(0).taskList().stream().map(String::valueOf).collect(Collectors.joining()));
   }
 }
