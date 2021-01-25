@@ -1,5 +1,9 @@
 package privat.kurellajunior.rover;
 
+import privat.kurellajunior.rover.error.MovementOffPlateauException;
+import privat.kurellajunior.rover.error.RoverError;
+import privat.kurellajunior.rover.error.UnknowTaskException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -14,8 +18,8 @@ public class Rover {
   final Position maxPos;
   private char heading;
   private Position position;
-  private Queue<Character> tasks;
-  private List<Throwable> errors;
+  private final Queue<Character> tasks;
+  private final List<Throwable> errors;
   private List<Rover> obstacles;
 
   public Rover(String id, Position maxPos, Position position, char heading) {

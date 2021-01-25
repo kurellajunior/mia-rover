@@ -1,5 +1,7 @@
 package privat.kurellajunior.rover;
 
+import privat.kurellajunior.rover.error.UnknownDirectionException;
+
 import java.util.Objects;
 
 /**

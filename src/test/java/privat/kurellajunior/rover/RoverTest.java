@@ -1,6 +1,7 @@
 package privat.kurellajunior.rover;
 
 import org.junit.jupiter.api.Test;
+import privat.kurellajunior.rover.error.MovementOffPlateauException;
 
 import java.util.Arrays;
 

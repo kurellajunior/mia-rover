@@ -1,4 +1,6 @@
-package privat.kurellajunior.rover;
+package privat.kurellajunior.rover.error;
+
+import privat.kurellajunior.rover.Position;
 
 /**
  *

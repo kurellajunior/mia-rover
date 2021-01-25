@@ -1,4 +1,4 @@
-package privat.kurellajunior.rover;
+package privat.kurellajunior.rover.error;
 
 /**
  *
