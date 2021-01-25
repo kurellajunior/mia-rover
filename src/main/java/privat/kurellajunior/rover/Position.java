@@ -41,6 +41,21 @@ public class Position {
 
   @Override
   public String toString() {
-    return "["+ x + "," + y + ']';
+    return "[" + x + "," + y + ']';
+  }
+
+  public Position update(char heading) throws UnknownDirectionException {
+    switch (heading) {
+      case 'N':
+        return new Position(x, y + 1);
+      case 'E':
+        return new Position(x + 1, y);
+      case 'S':
+        return new Position(x, y - 1);
+      case 'W':
+        return new Position(x - 1, y);
+      default:
+        throw new UnknownDirectionException(heading);
+    }
   }
 }

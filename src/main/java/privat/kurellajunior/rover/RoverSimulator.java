@@ -29,7 +29,7 @@ public class RoverSimulator {
     out.println("---- begin simulation");
     for (Rover rover : plateau) {
       final int steps = rover.run();
-      out.println("rover " + rover.id + " executed " + steps + " tasks: " + rover.position() + rover.heading());
+      out.println("rover " + rover.id + " tasks executed: " + steps + ", skipped: "+rover.errors().size()+ " ⇒ " + rover.position() + rover.heading());
     }
     out.println("---- end simulation");
   }
