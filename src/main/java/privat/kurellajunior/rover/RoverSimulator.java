@@ -43,14 +43,14 @@ public class RoverSimulator {
     Position maxPos = new Position(scanner.nextInt(10), scanner.nextInt(10));
     final ArrayList<Rover> rovers = new ArrayList<>();
     while (scanner.hasNextLine()) {
-      rovers.add(
-          new Rover(
-              UUID.randomUUID().toString(),
-              maxPos,
-              new Position(scanner.nextInt(10), scanner.nextInt(10)),
-              scanner.nextLine().trim().charAt(0))
-      );
-      rovers.get(rovers.size() - 1).addTasks(scanner.nextLine());
+      final Rover rover = new Rover(
+          UUID.randomUUID().toString(),
+          maxPos,
+          new Position(scanner.nextInt(10), scanner.nextInt(10)),
+          scanner.nextLine().trim().charAt(0));
+      rovers.add(rover);
+      rover.addTasks(scanner.nextLine());
+      rover.setObstacles(rovers); // FIXME: this gives each rover access to all rovers. Be careful!
     }
     return rovers;
 

@@ -63,6 +63,7 @@ class RoverTest {
     assertEquals(0, rover.taskList().size());
     assertEquals(1, rover.errors().size());
   }
+
   @Test
   void skipObstacles() {
     final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
@@ -76,6 +77,16 @@ class RoverTest {
     assertEquals('E', rover.heading());
   }
 
-
+  @Test
+  void ignoreYourself() {
+    final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
+    rover.addTasks("MLLM");
+    rover.setObstacles(Arrays.asList(rover));
+    assertEquals(4, rover.run());
+    assertEquals(0, rover.taskList().size());
+    assertEquals(0, rover.errors().size());
+    assertEquals(new Position(2,2), rover.position());
+    assertEquals('S', rover.heading());
+  }
 
 }
