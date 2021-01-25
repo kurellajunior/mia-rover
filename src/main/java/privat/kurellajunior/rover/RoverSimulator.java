@@ -36,7 +36,7 @@ public class RoverSimulator {
               new Position(scanner.nextInt(10), scanner.nextInt(10)),
               scanner.nextLine().trim().charAt(0))
       );
-      scanner.nextLine();
+      rovers.get(rovers.size()-1).addTasks(scanner.nextLine());
     }
     return rovers;
 
