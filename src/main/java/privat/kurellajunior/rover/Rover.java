@@ -41,4 +41,8 @@ public class Rover {
     }
     return tasks.size();
   }
+
+  public int run() {
+    return 0;
+  }
 }

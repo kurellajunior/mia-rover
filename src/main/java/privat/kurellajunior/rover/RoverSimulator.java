@@ -23,6 +23,10 @@ public class RoverSimulator {
     out.println("---- read data");
     final List<Rover> plateau = readSimulationPlan(simulationDescription);
     out.println("---- begin simulation");
+    for (Rover rover : plateau) {
+      final int steps = rover.run();
+      out.println("rover " + rover.id + " executed " + steps +" tasks: "+rover.position());
+    }
     out.println("---- end simulation");
   }
 
