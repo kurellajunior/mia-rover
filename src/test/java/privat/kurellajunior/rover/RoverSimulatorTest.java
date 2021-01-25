@@ -37,8 +37,8 @@ class RoverSimulatorTest {
         "MMRMMRMRRM";
     final List<Rover> result = RoverSimulator.readSimulationPlan(new ByteArrayInputStream(testInput.getBytes(StandardCharsets.UTF_8)));
     assertEquals(2, result.size(), "wrong line count");
-    assertEquals(result.get(0).maxPos, new Position(5,6));
-    assertEquals(result.get(0).position(), new Position(1,2));
-    assertEquals(result.get(0).heading(), 'N');
+    assertEquals(new Position(5,6), result.get(0).maxPos);
+    assertEquals(new Position(1,2), result.get(0).position());
+    assertEquals('N', result.get(0).heading());
   }
 }
