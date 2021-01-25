@@ -6,8 +6,10 @@ import java.io.ByteArrayInputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -16,12 +18,24 @@ class RoverSimulatorTest {
 
   @Test
   void runSimulation() {
-    String testInput ="";
+    String testInput = "";
     StringWriter resultCollector = new StringWriter();
     RoverSimulator.runSimulation(new ByteArrayInputStream(testInput.getBytes(StandardCharsets.UTF_8)), new PrintWriter(resultCollector));
     final String result = resultCollector.toString();
 
     assertTrue(result.startsWith("---- begin simulation\n"));
     assertTrue(result.endsWith("---- end simulation\n"));
+  }
+
+  @Test
+  void readSimulationPlan() {
+    String testInput =
+        "5 5\n" +
+        "1 2 N\n" +
+        "LMLMLMLMM\n" +
+        "3 3 E\n" +
+        "MMRMMRMRRM";
+    final List<Rover> result = RoverSimulator.readSimulationPlan(new ByteArrayInputStream(testInput.getBytes(StandardCharsets.UTF_8)));
+    assertEquals(2, result.size(), "wrong line count");
   }
 }

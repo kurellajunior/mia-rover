@@ -2,6 +2,10 @@ package privat.kurellajunior.rover;
 
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.UUID;
 
 /**
  *
@@ -20,5 +24,24 @@ public class RoverSimulator {
     out.println("---- end simulation");
   }
 
+  protected static List<Rover> readSimulationPlan(InputStream simulationDescription) {
+    final Scanner scanner = new Scanner(simulationDescription);
+    Position maxPos =  new Position(scanner.nextInt(10),scanner.nextInt(10));
+    final ArrayList<Rover> rovers = new ArrayList<>();
+    while (scanner.hasNextLine()) {
+      rovers.add(
+          new Rover(
+              UUID.randomUUID().toString(),
+              maxPos,
+              new Position(scanner.nextInt(10), scanner.nextInt(10)),
+              scanner.nextLine().charAt(0))
+      );
+      scanner.nextLine();
+    }
+    return rovers;
+
+
+
+  }
 }
 
