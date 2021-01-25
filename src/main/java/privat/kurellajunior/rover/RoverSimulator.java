@@ -37,7 +37,7 @@ public class RoverSimulator {
       final int steps = rover.run();
       out.println("rover " + rover.id + " tasks executed: " + steps + ", skipped: "+rover.errors().size()+ " ⇒ " + rover.position() + rover.heading());
       for (Throwable error : rover.errors()) {
-        out.println(error.getClass().getSimpleName() +": " + error.getMessage());
+        out.println(" - " + error.getClass().getSimpleName() +": " + error.getMessage());
       }
     }
     out.println("---- end simulation");
