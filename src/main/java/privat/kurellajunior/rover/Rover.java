@@ -1,6 +1,7 @@
 package privat.kurellajunior.rover;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -15,6 +16,7 @@ public class Rover {
   private Position position;
   private Queue<Character> tasks;
   private List<Throwable> errors;
+  private List<Rover> obstacles;
 
   public Rover(String id, Position maxPos, Position position, char heading) {
     this.id = id;
@@ -23,6 +25,7 @@ public class Rover {
     this.position = position;
     tasks = new LinkedList<>();
     errors = new ArrayList<>(1);
+    obstacles = Collections.emptyList();
   }
 
   public Position position() {
@@ -42,6 +45,10 @@ public class Rover {
       tasks.add(task);
     }
     return tasks.size();
+  }
+
+  public void setObstacles(List<Rover> obstacles) {
+    this.obstacles = obstacles;
   }
 
   public int run() {
@@ -107,11 +114,15 @@ public class Rover {
 
   private void move() throws RoverError {
     final Position nextPos = position.update(heading);
+    // test for end of plateau
     if (nextPos.x() < 0 || nextPos.x() > maxPos.x()
         || nextPos.y() < 0 || nextPos.y() > maxPos.y()) {
       throw new MovementOffPlateauException(position, heading);
     }
-    // TODO check collision before assigning
+    // collision test
+    if (obstacles.stream().anyMatch(rover -> rover.position.equals(nextPos))) {
+      throw new MovementOffPlateauException(position, heading);
+    }
     position = nextPos;
   }
 

@@ -2,6 +2,8 @@ package privat.kurellajunior.rover;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -61,4 +63,19 @@ class RoverTest {
     assertEquals(0, rover.taskList().size());
     assertEquals(1, rover.errors().size());
   }
+  @Test
+  void skipObstacles() {
+    final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
+    rover.addTasks("MRM");
+    final Rover obstacle = new Rover("o1", new Position(5, 5), new Position(3, 3), 'S');
+    rover.setObstacles(Arrays.asList(obstacle));
+    assertEquals(2, rover.run());
+    assertEquals(0, rover.taskList().size());
+    assertEquals(1, rover.errors().size());
+    assertEquals(new Position(2,3), rover.position());
+    assertEquals('E', rover.heading());
+  }
+
+
+
 }
