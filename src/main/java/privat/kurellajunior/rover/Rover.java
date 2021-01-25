@@ -1,5 +1,6 @@
 package privat.kurellajunior.rover;
 
+import privat.kurellajunior.rover.error.CollisionException;
 import privat.kurellajunior.rover.error.MovementOffPlateauException;
 import privat.kurellajunior.rover.error.RoverError;
 import privat.kurellajunior.rover.error.UnknowTaskException;
@@ -125,7 +126,7 @@ public class Rover {
     }
     // collision test
     if (obstacles.stream().anyMatch(rover -> rover.position.equals(nextPos))) {
-      throw new MovementOffPlateauException(position, heading);
+      throw new CollisionException(position, heading);
     }
     position = nextPos;
   }
