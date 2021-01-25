@@ -2,7 +2,10 @@
 
 # Prerequisites
 
+   - maven3 installed
+
 # Run
 
   - clone the git repository
-  - run `./bin/rover-simulation.sh`
+  - execute maven build `mvn package`
+  - on Unix machines run `./bin/rover-simulation.sh`
