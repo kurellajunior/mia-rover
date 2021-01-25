@@ -22,6 +22,7 @@ public class Rover {
     this.heading = heading;
     this.position = position;
     tasks = new LinkedList<>();
+    errors = new ArrayList<>(1);
   }
 
   public Position position() {
@@ -49,12 +50,15 @@ public class Rover {
 
       try {
         final Character task = tasks.poll();
-        switch (task){
-          case 'M': move();
+        switch (task) {
+          case 'M':
+            move();
             break;
-          case 'L': turnLeft();
+          case 'L':
+            turnLeft();
             break;
-          case 'R': turnRight();
+          case 'R':
+            turnRight();
             break;
           default:
             throw new UnknowTaskException(task);
@@ -64,29 +68,49 @@ public class Rover {
         errors.add(roverError);
       }
     }
-    return 0;
+    return executed;
   }
 
   private void turnRight() {
     switch (heading) {
-      case 'N': heading='E';
-      case 'E': heading='S';
-      case 'S': heading='W';
-      case 'W': heading='N';
+      case 'N':
+        heading = 'E';
+        break;
+      case 'E':
+      heading = 'S';
+        break;
+      case 'S':
+      heading = 'W';
+        break;
+      case 'W':
+      heading = 'N';
+        break;
     }
   }
 
   private void turnLeft() {
     switch (heading) {
-      case 'N': heading='W';
-      case 'W': heading='S';
-      case 'S': heading='E';
-      case 'E': heading='N';
+      case 'N':
+        heading = 'W';
+        break;
+      case 'W':
+        heading = 'S';
+        break;
+      case 'S':
+        heading = 'E';
+        break;
+      case 'E':
+        heading = 'N';
+        break;
     }
   }
 
   private void move() throws RoverError {
     // TODO check for valid move before assigning
     position = position.update(heading);
+  }
+
+  public List<Throwable> errors() {
+    return errors;
   }
 }
