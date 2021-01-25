@@ -1,3 +1,14 @@
+### General
+out/
+build/
+tmp/
+var/
+*.tmp
+*.bak
+
+### Maven
+target/
+
 # Compiled class file
 *.class
 
@@ -21,3 +32,42 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+### Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+### macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### JetBrains
+# User-specific stuff:
+.idea
+*.iws
+*.ipr
+*.iml
+.idea_modules/
+atlassian-ide-plugin.xml
+DerivedData/
+
+### Eclipse
+.metadata
+bin/
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.project
+.factorypath
