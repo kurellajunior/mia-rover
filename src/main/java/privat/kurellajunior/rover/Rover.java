@@ -17,4 +17,11 @@ public class Rover {
     this.position = position;
   }
 
+  public Position position() {
+    return position;
+  }
+
+  public char heading() {
+    return heading;
+  }
 }
