@@ -77,13 +77,13 @@ public class Rover {
         heading = 'E';
         break;
       case 'E':
-      heading = 'S';
+        heading = 'S';
         break;
       case 'S':
-      heading = 'W';
+        heading = 'W';
         break;
       case 'W':
-      heading = 'N';
+        heading = 'N';
         break;
     }
   }
@@ -106,8 +106,13 @@ public class Rover {
   }
 
   private void move() throws RoverError {
-    // TODO check for valid move before assigning
-    position = position.update(heading);
+    final Position nextPos = position.update(heading);
+    if (nextPos.x() < 0 || nextPos.x() > maxPos.x()
+        || nextPos.y() < 0 || nextPos.y() > maxPos.y()) {
+      throw new MovementOffPlateauException(position, heading);
+    }
+    // TODO check collision before assigning
+    position = nextPos;
   }
 
   public List<Throwable> errors() {
