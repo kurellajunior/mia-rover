@@ -30,6 +30,19 @@ class RoverTest {
   }
 
   @Test
+  void runOffPlateau() {
+    final Rover rover = new Rover("t1", new Position(0, 0), new Position(0, 0), 'N');
+    rover.addTasks("MLMLMLM");
+    assertEquals(3, rover.run());
+    assertEquals(0, rover.taskList().size());
+    assertEquals(4, rover.errors().size());
+    assertEquals(MovementOffPlateauException.class, rover.errors().get(0).getClass());
+    assertEquals(new Position(0,0), rover.position());
+    assertEquals('E', rover.heading());
+  }
+
+
+  @Test
   void runValidTurn() {
     final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
     rover.addTasks("LLLLRRRRR");
