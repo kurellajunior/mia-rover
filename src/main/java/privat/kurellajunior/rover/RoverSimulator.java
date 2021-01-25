@@ -34,7 +34,7 @@ public class RoverSimulator {
               UUID.randomUUID().toString(),
               maxPos,
               new Position(scanner.nextInt(10), scanner.nextInt(10)),
-              scanner.nextLine().charAt(0))
+              scanner.nextLine().trim().charAt(0))
       );
       scanner.nextLine();
     }
