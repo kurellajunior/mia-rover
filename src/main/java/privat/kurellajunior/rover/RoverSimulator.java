@@ -19,11 +19,15 @@ public class RoverSimulator {
       System.exit(23);
     }
     final PrintWriter out = new PrintWriter(System.out);
-    runSimulation(new Scanner(new File(args[0]), StandardCharsets.UTF_8), out);
+    final List<Rover> plateau = runSimulation(new Scanner(new File(args[0]), StandardCharsets.UTF_8), out);
+    // expected simplified output
+    for (Rover rover : plateau) {
+      out.println(rover.position().x() + " "+ rover.position().y()+" " + rover.heading());
+    }
     out.close();
   }
 
-  protected static void runSimulation(Scanner scanner, PrintWriter out) {
+  protected static List<Rover> runSimulation(Scanner scanner, PrintWriter out) {
     out.println("---- read data");
     final List<Rover> plateau = readSimulationPlan(scanner);
     out.println("---- begin simulation");
@@ -32,6 +36,7 @@ public class RoverSimulator {
       out.println("rover " + rover.id + " tasks executed: " + steps + ", skipped: "+rover.errors().size()+ " ⇒ " + rover.position() + rover.heading());
     }
     out.println("---- end simulation");
+    return plateau;
   }
 
   protected static List<Rover> readSimulationPlan(Scanner scanner) {
