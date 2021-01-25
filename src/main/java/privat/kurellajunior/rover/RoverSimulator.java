@@ -20,6 +20,8 @@ public class RoverSimulator {
   }
 
   protected static void runSimulation(InputStream simulationDescription, PrintWriter out) {
+    out.println("---- read data");
+    final List<Rover> plateau = readSimulationPlan(simulationDescription);
     out.println("---- begin simulation");
     out.println("---- end simulation");
   }
