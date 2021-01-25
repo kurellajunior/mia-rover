@@ -3,7 +3,9 @@ package privat.kurellajunior.rover;
 import privat.kurellajunior.rover.error.CollisionException;
 import privat.kurellajunior.rover.error.MovementOffPlateauException;
 import privat.kurellajunior.rover.error.RoverError;
+import privat.kurellajunior.rover.error.RoverOffCliffException;
 import privat.kurellajunior.rover.error.UnknowTaskException;
+import privat.kurellajunior.rover.error.UnknownDirectionException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,9 +25,12 @@ public class Rover {
   private final List<Throwable> errors;
   private List<Rover> obstacles;
 
-  public Rover(String id, Position maxPos, Position position, char heading) {
+  public Rover(String id, Position maxPos, Position position, char heading) throws RoverOffCliffException {
     this.id = id;
     this.maxPos = maxPos;
+    if (isOffPlateau(position)) {
+      throw new RoverOffCliffException(position);
+    }
     this.heading = heading;
     this.position = position;
     tasks = new LinkedList<>();
@@ -83,7 +88,7 @@ public class Rover {
     return executed;
   }
 
-  private void turnRight() {
+  private void turnRight() throws UnknownDirectionException {
     switch (heading) {
       case 'N':
         heading = 'E';
@@ -97,10 +102,12 @@ public class Rover {
       case 'W':
         heading = 'N';
         break;
+      default:
+        throw new UnknownDirectionException(heading);
     }
   }
 
-  private void turnLeft() {
+  private void turnLeft() throws UnknownDirectionException {
     switch (heading) {
       case 'N':
         heading = 'W';
@@ -114,14 +121,15 @@ public class Rover {
       case 'E':
         heading = 'N';
         break;
+      default:
+        throw new UnknownDirectionException(heading);
     }
   }
 
   private void move() throws RoverError {
     final Position nextPos = position.update(heading);
     // test for end of plateau
-    if (nextPos.x() < 0 || nextPos.x() > maxPos.x()
-        || nextPos.y() < 0 || nextPos.y() > maxPos.y()) {
+    if (isOffPlateau(nextPos)) {
       throw new MovementOffPlateauException(position, heading);
     }
     // collision test
@@ -129,6 +137,11 @@ public class Rover {
       throw new CollisionException(position, heading);
     }
     position = nextPos;
+  }
+
+  private boolean isOffPlateau(Position nextPos) {
+    return nextPos.x() < 0 || nextPos.x() > maxPos.x()
+           || nextPos.y() < 0 || nextPos.y() > maxPos.y();
   }
 
   public List<Throwable> errors() {

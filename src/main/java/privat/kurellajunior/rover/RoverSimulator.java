@@ -1,5 +1,7 @@
 package privat.kurellajunior.rover;
 
+import privat.kurellajunior.rover.error.RoverOffCliffException;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -29,7 +31,7 @@ public class RoverSimulator {
 
   protected static List<Rover> runSimulation(Scanner scanner, PrintWriter out) {
     out.println("---- read data");
-    final List<Rover> plateau = readSimulationPlan(scanner);
+    final List<Rover> plateau = readSimulationPlan(scanner, out);
     out.println("---- begin simulation");
     for (Rover rover : plateau) {
       final int steps = rover.run();
@@ -42,18 +44,22 @@ public class RoverSimulator {
     return plateau;
   }
 
-  protected static List<Rover> readSimulationPlan(Scanner scanner) {
+  protected static List<Rover> readSimulationPlan(Scanner scanner, PrintWriter out) {
     Position maxPos = new Position(scanner.nextInt(10), scanner.nextInt(10));
     final ArrayList<Rover> rovers = new ArrayList<>();
     while (scanner.hasNextLine()) {
-      final Rover rover = new Rover(
-          UUID.randomUUID().toString(),
-          maxPos,
-          new Position(scanner.nextInt(10), scanner.nextInt(10)),
-          scanner.nextLine().trim().charAt(0));
-      rovers.add(rover);
-      rover.addTasks(scanner.nextLine());
-      rover.setObstacles(rovers); // FIXME: this gives each rover access to all rovers. Be careful!
+      try {
+        final int x = scanner.nextInt(10);
+        final int y = scanner.nextInt(10);
+        final String heading = scanner.nextLine().trim();
+        final String tasks = scanner.nextLine();
+        final Rover rover = new Rover(UUID.randomUUID().toString(), maxPos, new Position(x, y), heading.charAt(0));
+        rovers.add(rover);
+        rover.addTasks(tasks);
+        rover.setObstacles(rovers); // FIXME: this gives each rover access to all rovers. Be careful!
+      } catch (RoverOffCliffException error) {
+        out.println(error.getMessage());
+      }
     }
     return rovers;
 

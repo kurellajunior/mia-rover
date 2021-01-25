@@ -1,6 +1,7 @@
 package privat.kurellajunior.rover;
 
 import org.junit.jupiter.api.Test;
+import privat.kurellajunior.rover.error.RoverOffCliffException;
 
 import java.io.ByteArrayInputStream;
 import java.io.PrintWriter;
@@ -31,14 +32,14 @@ class RoverSimulatorTest {
   }
 
   @Test
-  void readSimulationPlan() {
+  void readSimulationPlan() throws RoverOffCliffException {
     String testInput =
         "5 6\n" +
         "1 2 N\n" +
         "LMLMLMLMM\n" +
         "3 3 E\n" +
         "MMRMMRMRRM";
-    final List<Rover> result = RoverSimulator.readSimulationPlan(new Scanner(testInput));
+    final List<Rover> result = RoverSimulator.readSimulationPlan(new Scanner(testInput), new PrintWriter(new StringWriter()));
     assertEquals(2, result.size(), "wrong line count");
     assertEquals(new Position(5,6), result.get(0).maxPos);
     assertEquals(new Position(1,2), result.get(0).position());

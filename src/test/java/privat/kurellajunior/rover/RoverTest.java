@@ -2,10 +2,12 @@ package privat.kurellajunior.rover;
 
 import org.junit.jupiter.api.Test;
 import privat.kurellajunior.rover.error.MovementOffPlateauException;
+import privat.kurellajunior.rover.error.RoverOffCliffException;
 
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -13,7 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RoverTest {
 
   @Test
-  void addTasks() {
+  void createRoverOffCliff() {
+    RoverOffCliffException exception = assertThrows(RoverOffCliffException.class, () -> new Rover("c1", new Position(4, 4), new Position(5, 2), 'N'));
+  }
+
+  @Test
+  void addTasks() throws RoverOffCliffException {
     final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
     assertEquals(0, rover.taskList().size());
     rover.addTasks("MMM");
@@ -22,7 +29,7 @@ class RoverTest {
   }
 
   @Test
-  void runValidMove() {
+  void runValidMove() throws RoverOffCliffException {
     final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
     rover.addTasks("MMM");
     assertEquals(3, rover.run());
@@ -33,7 +40,7 @@ class RoverTest {
   }
 
   @Test
-  void runOffPlateau() {
+  void runOffPlateau() throws RoverOffCliffException {
     final Rover rover = new Rover("t1", new Position(0, 0), new Position(0, 0), 'N');
     rover.addTasks("MLMLMLM");
     assertEquals(3, rover.run());
@@ -46,7 +53,7 @@ class RoverTest {
 
 
   @Test
-  void runValidTurn() {
+  void runValidTurn() throws RoverOffCliffException {
     final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
     rover.addTasks("LLLLRRRRR");
     assertEquals(9, rover.run());
@@ -57,7 +64,7 @@ class RoverTest {
   }
 
   @Test
-  void runOneBroken() {
+  void runOneBroken() throws RoverOffCliffException {
     final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
     rover.addTasks("XMM");
     assertEquals(2, rover.run());
@@ -66,7 +73,7 @@ class RoverTest {
   }
 
   @Test
-  void skipObstacles() {
+  void skipObstacles() throws RoverOffCliffException {
     final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
     rover.addTasks("MRM");
     final Rover obstacle = new Rover("o1", new Position(5, 5), new Position(3, 3), 'S');
@@ -79,7 +86,7 @@ class RoverTest {
   }
 
   @Test
-  void ignoreYourself() {
+  void ignoreYourself() throws RoverOffCliffException {
     final Rover rover = new Rover("t1", new Position(5, 5), new Position(2, 2), 'N');
     rover.addTasks("MLLM");
     rover.setObstacles(Arrays.asList(rover));
