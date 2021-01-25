@@ -43,6 +43,30 @@ public class Rover {
   }
 
   public int run() {
+    int executed = 0;
+    while (tasks.size() > 0) {
+      switch (tasks.poll()){
+        case 'M': move();
+          break;
+        case 'L': turnLeft();
+          break;
+        case 'R': turnRight();
+          break;
+        default:
+          // error handling
+      }
+    }
     return 0;
+  }
+
+  private void turnRight() {
+    
+  }
+
+  private void turnLeft() {
+
+  }
+
+  private void move() {
   }
 }
